@@ -24,6 +24,11 @@ void main() async {
       logLevel: bg.Config.LOG_LEVEL_VERBOSE,
       autoSync: true,
       // isMoving: true,
+      url: "https://mapas.120m4n.tk/locations",
+      params: {
+        'user_id': 1234,
+        'device_id': 'abc123'
+      },
       backgroundPermissionRationale: bg.PermissionRationale(
           title: "Allow {applicationName} to access to this device's location in the background?",
           message:

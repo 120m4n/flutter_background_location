@@ -23,10 +23,14 @@ class _LogPageState extends State<LogPage> {
           () => _isBgStarted = locationTrackerState.enabled,
         ));
     bg.BackgroundGeolocation.onLocation(
-        onLocationChanged, (bg.LocationError error) {
-        	// Handle LocationError here.
-	        print("[onLocation] ERROR: $error");  
-        });
+      onLocationChanged, (bg.LocationError error) {
+        // Handle LocationError here.
+        print("[onLocation] ERROR: $error");  
+    });
+
+    bg.BackgroundGeolocation.onHttp((bg.HttpEvent response) {
+      print('[http] success? ${response.success}, status? ${response.status}');
+    });
 
     // bg.BackgroundGeolocation.onMotionChange((bg.Location location) {
     //   print("[onMotionChange] isMoving? ${location.isMoving}");
