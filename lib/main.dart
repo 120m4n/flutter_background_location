@@ -24,9 +24,9 @@ void main() async {
       logLevel: bg.Config.LOG_LEVEL_VERBOSE,
       autoSync: true,
       // isMoving: true,
-      url: "https://mapas.120m4n.tk/locations",
+      url: "https://realtime.mapas-electrosoftware.xyz/api/locations",
       params: {
-        'user_id': 1234,
+        'user_id': 'Gflutter/roman',
         'device_id': 'abc123'
       },
       backgroundPermissionRationale: bg.PermissionRationale(
