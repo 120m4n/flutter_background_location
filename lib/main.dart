@@ -11,11 +11,14 @@ void main() async {
 
   await InjectionContainer().init();
 
+  bg.DeviceInfo deviceInfo = await bg.DeviceInfo.getInstance();
+
   await bg.BackgroundGeolocation.ready(
     bg.Config(
-      desiredAccuracy: bg.Config.DESIRED_ACCURACY_HIGH,
-      distanceFilter: 10.0,
-      disableElasticity: true,
+      autoSyncThreshold: 3,
+      desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
+      distanceFilter: 5.0,
+      disableElasticity: false,
       stopOnTerminate: false,
       startOnBoot: true,
       preventSuspend: true,
@@ -26,8 +29,7 @@ void main() async {
       // isMoving: true,
       url: "https://realtime.mapas-electrosoftware.xyz/api/locations",
       params: {
-        'user_id': 'Gflutter/roman',
-        'device_id': 'abc123'
+        'user_id':'Gflutter/${deviceInfo.model}-${deviceInfo.version}',
       },
       backgroundPermissionRationale: bg.PermissionRationale(
           title: "Allow {applicationName} to access to this device's location in the background?",
@@ -35,6 +37,9 @@ void main() async {
               "In order to track your activity in the background, please enable {backgroundPermissionOptionLabel} location permission",
           positiveAction: "Change to {backgroundPermissionOptionLabel}",
           negativeAction: "Cancel"),
+          notification: bg.Notification(
+            title: "The Title", 
+            text: "The Text")
     ),
   );
 
