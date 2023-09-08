@@ -25,11 +25,11 @@ class _LogPageState extends State<LogPage> {
     bg.BackgroundGeolocation.onLocation(
       onLocationChanged, (bg.LocationError error) {
         // Handle LocationError here.
-        print("[onLocation] ERROR: $error");  
+        debugPrint("[onLocation] ERROR: $error");  
     });
 
     bg.BackgroundGeolocation.onHttp((bg.HttpEvent response) {
-      print('[http] success? ${response.success}, status? ${response.status}');
+      debugPrint('[http] success? ${response.success}, status? ${response.status}');
     });
 
     // bg.BackgroundGeolocation.onMotionChange((bg.Location location) {
@@ -78,24 +78,51 @@ class _LogPageState extends State<LogPage> {
           ),
         ],
       ),
-      body: Builder(builder: (context) {
-        if (savedLocations.isEmpty) {
-          return const Center(
-              child: Text(
-            'Empty Saved Locations',
-            style: TextStyle(fontSize: 20),
-          ));
-        }
-        return ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: savedLocations.length,
-          itemBuilder: (context, index) => LogItem(
-            index: index,
-            locationLabel: savedLocations[index],
+      body: Column(
+        children: [
+          Expanded(
+            child: Builder(builder: (context) {
+              if (savedLocations.isEmpty) {
+                return const Center(
+                    child: Text(
+                  'Empty Saved Locations',
+                  style: TextStyle(fontSize: 20),
+                ));
+              }
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: savedLocations.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 1.0,
+                      ),
+                    ),
+                    child: LogItem(
+                      index: index,
+                      locationLabel: savedLocations[index],
+                    ),
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+              );
+            }),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-        );
-      }),
+          const SizedBox(height: 10), // Space of 10 pixels
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                savedLocations.clear();
+              });
+            },
+            child: const Text('Erase All Saved Locations'),
+          ),
+          const SizedBox(height: 10), // Space of 10 pixels
+        ],
+      ),
     );
   }
 }

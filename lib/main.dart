@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart' as bg;
+import 'package:flutter_background_location/widgets/web_view_container.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_background_location/injection_container.dart';
 import 'package:flutter_background_location/log_page.dart';
@@ -54,11 +55,55 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Background Geolocation',
+      debugShowCheckedModeBanner: true,
       themeMode: ThemeMode.system,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(backgroundColor: Colors.orangeAccent),
       ),
-      home: const LogPage(),
+      routes: {
+        '/': (context) => const MainPage(), 
+        '/webViewController':(context) => const WebViewContainer(),
+        '/logPage': (context) => const LogPage(),
+      },
+    );
+  }
+}
+
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('WebView Flutter'),
+      ),
+      body: content(),
+    );
+  }
+
+  Widget content() {
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/logPage');
+          },
+          child: const Text('Activar Log Page'),
+        ),
+        const SizedBox(height: 10), // Space of 10 pixels
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/webViewController');
+          },
+          child: const Text('Open Web View'),
+        ),
+      ]
     );
   }
 }
