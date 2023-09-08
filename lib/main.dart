@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_background_geolocation/flutter_background_geolocation.dart' as bg;
+import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
+    as bg;
+import 'package:flutter_background_location/widgets/btn_custom.dart';
+// import 'package:flutter_background_location/widgets/columnas.dart';
 import 'package:flutter_background_location/widgets/web_view_container.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_background_location/injection_container.dart';
@@ -16,32 +19,30 @@ void main() async {
 
   await bg.BackgroundGeolocation.ready(
     bg.Config(
-      autoSyncThreshold: 3,
-      desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
-      distanceFilter: 5.0,
-      disableElasticity: false,
-      stopOnTerminate: false,
-      startOnBoot: true,
-      preventSuspend: true,
-      debug: true,
-      // deferTime: ,
-      logLevel: bg.Config.LOG_LEVEL_VERBOSE,
-      autoSync: true,
-      // isMoving: true,
-      url: "https://realtime.mapas-electrosoftware.xyz/api/locations",
-      params: {
-        'user_id':'Gflutter/${deviceInfo.model}-${deviceInfo.version}',
-      },
-      backgroundPermissionRationale: bg.PermissionRationale(
-          title: "Allow {applicationName} to access to this device's location in the background?",
-          message:
-              "In order to track your activity in the background, please enable {backgroundPermissionOptionLabel} location permission",
-          positiveAction: "Change to {backgroundPermissionOptionLabel}",
-          negativeAction: "Cancel"),
-          notification: bg.Notification(
-            title: "The Title", 
-            text: "The Text")
-    ),
+        // autoSyncThreshold: 3,
+        desiredAccuracy: bg.Config.DESIRED_ACCURACY_LOWEST,
+        distanceFilter: 5.0,
+        disableElasticity: false,
+        stopOnTerminate: false,
+        startOnBoot: true,
+        preventSuspend: true,
+        debug: true,
+        // deferTime: ,
+        logLevel: bg.Config.LOG_LEVEL_VERBOSE,
+        autoSync: true,
+        // isMoving: true,
+        url: "https://realtime.mapas-electrosoftware.xyz/api/locations",
+        params: {
+          'user_id': 'Gflutter/${deviceInfo.model}-${deviceInfo.version}',
+        },
+        backgroundPermissionRationale: bg.PermissionRationale(
+            title:
+                "Allow {applicationName} to access to this device's location in the background?",
+            message:
+                "In order to track your activity in the background, please enable {backgroundPermissionOptionLabel} location permission",
+            positiveAction: "Change to {backgroundPermissionOptionLabel}",
+            negativeAction: "Cancel"),
+        notification: bg.Notification(title: "The Title", text: "The Text")),
   );
 
   runApp(const MyApp());
@@ -61,8 +62,9 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(backgroundColor: Colors.orangeAccent),
       ),
       routes: {
-        '/': (context) => const MainPage(), 
-        '/webViewController':(context) => const WebViewContainer(),
+        // '/': (context) => const MyWidgetColumns(),
+        '/': (context) => const MainPage(),
+        '/webViewController': (context) => const WebViewContainer(),
         '/logPage': (context) => const LogPage(),
       },
     );
@@ -88,22 +90,14 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget content() {
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/logPage');
-          },
-          child: const Text('Activar Log Page'),
-        ),
-        const SizedBox(height: 10), // Space of 10 pixels
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/webViewController');
-          },
-          child: const Text('Open Web View'),
-        ),
-      ]
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Button('Log Page', () {
+        Navigator.pushNamed(context, '/logPage');
+      }),
+      const SizedBox(height: 20),
+      Button('WebView Container', () {
+        Navigator.pushNamed(context, '/webViewController');
+      })
+    ]);
   }
 }
