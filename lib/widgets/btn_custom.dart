@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
       // color: color,
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
       decoration: BoxDecoration(
-          color: Colors.amber,
+          color: Colors.orangeAccent,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.black),
           boxShadow: [
@@ -55,6 +55,9 @@ class Button extends StatelessWidget {
       //   fit: BoxFit.fitHeight,
       child: ElevatedButton(
         onPressed: callback, // Simply put the function name here, DON'T use ()
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.orangeAccent),
+        ),
         child: Text(text),
       ),
       // )

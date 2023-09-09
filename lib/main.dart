@@ -19,8 +19,8 @@ void main() async {
 
   await bg.BackgroundGeolocation.ready(
     bg.Config(
-        // autoSyncThreshold: 3,
-        desiredAccuracy: bg.Config.DESIRED_ACCURACY_LOWEST,
+        autoSyncThreshold: 7,
+        desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
         distanceFilter: 5.0,
         disableElasticity: false,
         stopOnTerminate: false,
@@ -95,14 +95,14 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Button('Log Page', () {
+          Button('Activar GPS', () {
             Navigator.pushNamed(context, '/logPage');
           }),
           const SizedBox(
             height: 20,
             // width: 250,
           ),
-          Button('WebView Container', () {
+          Button('Visor del Juego', () {
             Navigator.pushNamed(context, '/webViewController');
           })
         ],
