@@ -90,14 +90,23 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget content() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Button('Log Page', () {
-        Navigator.pushNamed(context, '/logPage');
-      }),
-      const SizedBox(height: 20),
-      Button('WebView Container', () {
-        Navigator.pushNamed(context, '/webViewController');
-      })
-    ]);
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Button('Log Page', () {
+            Navigator.pushNamed(context, '/logPage');
+          }),
+          const SizedBox(
+            height: 20,
+            // width: 250,
+          ),
+          Button('WebView Container', () {
+            Navigator.pushNamed(context, '/webViewController');
+          })
+        ],
+      ),
+    );
   }
 }

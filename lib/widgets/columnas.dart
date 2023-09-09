@@ -13,9 +13,9 @@ class MyWidgetColumns extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(height: 35), // Space of 35 pixels
-        MyButton(Colors.orange, 1, 150, 35),
-        MyButton(Colors.blue, 2, 150, 35),
-        MyButton(Colors.red, 3, 150, 35),
+        MyButton(Colors.orange, 1, 50, 35),
+        MyButton(Colors.blue, 2, 50, 35),
+        MyButton(Colors.red, 3, 50, 35),
       ],
     );
   }

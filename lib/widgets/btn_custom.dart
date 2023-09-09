@@ -48,18 +48,16 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
-      width: 150,
+      width: 180,
+      // child: FittedBox(
+      //   fit: BoxFit.fitHeight,
       child: ElevatedButton(
         onPressed: callback, // Simply put the function name here, DON'T use ()
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.lightBlue,
-          padding: const EdgeInsets.all(12),
-          textStyle: const TextStyle(fontSize: 22),
-        ),
         child: Text(text),
       ),
+      // )
     );
   }
 }
