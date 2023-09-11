@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
@@ -7,6 +9,8 @@ import 'package:flutter_background_location/widgets/web_view_container.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_background_location/injection_container.dart';
 import 'package:flutter_background_location/log_page.dart';
+import 'package:device_info/device_info.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,13 +19,15 @@ void main() async {
 
   await InjectionContainer().init();
 
-  bg.DeviceInfo deviceInfo = await bg.DeviceInfo.getInstance();
+  //bg.DeviceInfo deviceInfo = await bg.DeviceInfo.getInstance();
+
+  final device = await getDeviceIdentifier();
 
   await bg.BackgroundGeolocation.ready(
     bg.Config(
-        autoSyncThreshold: 7,
+        autoSyncThreshold: 2,
         desiredAccuracy: bg.Config.DESIRED_ACCURACY_NAVIGATION,
-        distanceFilter: 5.0,
+        distanceFilter: 10,
         disableElasticity: false,
         stopOnTerminate: false,
         startOnBoot: true,
@@ -30,10 +36,10 @@ void main() async {
         // deferTime: ,
         logLevel: bg.Config.LOG_LEVEL_VERBOSE,
         autoSync: true,
-        // isMoving: true,
+        isMoving: true,
         url: "https://realtime.mapas-electrosoftware.xyz/api/locations",
         params: {
-          'user_id': 'Gflutter/${deviceInfo.model}-${deviceInfo.version}',
+          'user_id': 'Gflutter/$device',
         },
         backgroundPermissionRationale: bg.PermissionRationale(
             title:
@@ -109,4 +115,17 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+}
+
+
+Future<String> getDeviceIdentifier() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.androidId; // Unique Android ID
+  } else if (Platform.isIOS) {
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    return iosInfo.identifierForVendor; // Unique Identifier for Vendor (IDFV)
+  }
+  return "Unknown";
 }
