@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_geolocation/flutter_background_geolocation.dart'
     as bg;
+import 'package:flutter_background_location/widgets/background_image.dart';
 import 'package:flutter_background_location/widgets/btn_custom.dart';
 // import 'package:flutter_background_location/widgets/columnas.dart';
 import 'package:flutter_background_location/widgets/web_view_container.dart';
@@ -10,7 +11,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_background_location/injection_container.dart';
 import 'package:flutter_background_location/log_page.dart';
 import 'package:device_info/device_info.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -91,7 +91,12 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: const Text('WebView Flutter'),
       ),
-      body: content(),
+      body: Background(
+        bgImagePath: 'assets/images/background.jpg',
+        child: SafeArea(
+          child: content(),
+        ),
+      )
     );
   }
 
@@ -116,7 +121,6 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
 
 Future<String> getDeviceIdentifier() async {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
